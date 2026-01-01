@@ -1,0 +1,30 @@
+services:
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: saucedemo_tests
+    env_file:
+      - .env
+    environment:
+      - HEADLESS=headless
+      - UV_NO_CACHE=1
+    shm_size: '2gb'
+
+  tests-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: saucedemo_tests_ui
+    env_file:
+      - .env
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=${DISPLAY}
+      - HEADLESS=ui
+      - UV_NO_CACHE=1
+    network_mode: host
+    shm_size: '2gb'
+
+
